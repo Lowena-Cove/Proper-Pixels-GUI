@@ -81,7 +81,7 @@ def main() -> None:
     pixelated = pixelate.pixelate(
         img,
         num_colors = args.num_colors,
-        pixel_size = args.pixel_size,
+        result_scale = args.pixel_size,
         transparent_background = args.transparent,
         pixel_width = args.pixel_width,
         initial_upsample_factor = args.upscale_factor

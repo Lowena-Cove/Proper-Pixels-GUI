@@ -6,7 +6,7 @@ def pixelate(
         image: Image.Image,
         num_colors: int = 16,
         initial_upsample_factor: int = 2,
-        pixel_size: int | None = None,
+        result_scale: int | None = None,
         transparent_background: bool = False,
         intermediate_dir: Path | None = None,
         pixel_width: int | None = None
@@ -21,16 +21,18 @@ def pixelate(
         This is an important parameter to tune,
         if it is too high, pixels that should be the same color will be different colors
         if it is too low, pixels that should be different colors will be the same color
-    - pixel_size:
-        Upsample result by pixel_size factor after algorithm is complete if not None.
+    - result_scale:
+        Upsample result by result_scale factor after algorithm is complete if not None.
     - upsample_factor:
         Upsample original image by this factor. It may help detect lines.
     - transparent_background:
         If True, floos fills each corner of the result with transparent alpha.
     - intermediate_dir:
         directory to save images visualizing intermediate steps.
-    
-    Returns the result
+    - pixel_width:
+        If set, skips the step to automatically identify pixel width and uses this value.
+
+    Returns the true pixelated image.
     """
     rgba = image.convert("RGBA")
 
@@ -44,8 +46,8 @@ def pixelate(
     paletted_img = colors.palette_img(scaled_img, num_colors=num_colors)
 
     result = colors.downsample(paletted_img, mesh_lines, transparent_background=transparent_background)
-    if pixel_size is not None:
-        result = utils.scale_img(result, int(pixel_size))
+    if result_scale is not None:
+        result = utils.scale_img(result, int(result_scale))
 
     return result
 
@@ -67,7 +69,7 @@ def main():
         img = Image.open(img_path)
         result = pixelate(
             img,
-            pixel_size = 20,
+            result_scale = 20,
             num_colors = num_colors,
             transparent_background = False,
             intermediate_dir = output_dir,
