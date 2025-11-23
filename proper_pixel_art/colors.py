@@ -1,10 +1,11 @@
 """Handles image colors logic"""
 
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
+
+import numpy as np
 from PIL import Image, ImageColor
 from PIL.Image import Quantize
-import numpy as np
 
 RGB = tuple[int, int, int]
 

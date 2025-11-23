@@ -1,10 +1,12 @@
 """Handles mesh detection from pixel art style images"""
 
 from pathlib import Path
-from PIL import Image
-import numpy as np
+
 import cv2
-from proper_pixel_art import utils, colors
+import numpy as np
+from PIL import Image
+
+from proper_pixel_art import colors, utils
 from proper_pixel_art.utils import Lines, Mesh
 
 

@@ -1,9 +1,6 @@
 """Utility functions"""
 
-from typing import Iterator
-from pathlib import Path
-from PIL import Image, ImageSequence, ImageDraw
-import cv2
+from PIL import Image, ImageDraw
 
 Lines = list[int]  # Lines are a list of pixel indices for an image
 Mesh = tuple[

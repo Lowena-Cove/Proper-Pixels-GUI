@@ -1,8 +1,10 @@
 """Main functions for pixelating an image with the pixelate function"""
 
 from pathlib import Path
-from PIL import Image
+
 import numpy as np
+from PIL import Image
+
 from proper_pixel_art import colors, mesh, utils
 from proper_pixel_art.utils import Mesh
 
