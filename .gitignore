@@ -4,3 +4,7 @@ tests/outputs/
 notebooks/
 .python-version
 *__pycache__*
+# PyInstaller build files
+build/
+dist/
+*.spec
