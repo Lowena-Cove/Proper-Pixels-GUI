@@ -157,7 +157,7 @@ The standalone executable will be created in the `dist/` folder and can be distr
 
 ## Examples
 
-The algorithm is robust. It performs well for images that are already approximately alligned to a grid.
+The algorithm is robust. It performs well for images that are already approximately aligned to a grid.
 
 Here are a few examples. A mesh is computed, where each cell corresponds to one pixel.
 
