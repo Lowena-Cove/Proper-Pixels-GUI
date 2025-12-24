@@ -127,6 +127,34 @@ Without cloning:
 uvx --from "proper-pixel-art[web]" ppa-web
 ```
 
+### Desktop GUI
+
+A desktop GUI application is available for a more traditional app experience:
+
+```bash
+uv run ppa-gui
+# or directly using uvx
+uvx --from "proper-pixel-art" ppa-gui
+```
+
+The GUI provides:
+- Visual interface with drag-and-drop file selection
+- Real-time parameter adjustment with sliders
+- Side-by-side input/output preview
+- Easy save functionality
+
+#### Building Standalone Executable
+
+To create a standalone desktop application that can run without Python installed, see [BUILD_STANDALONE.md](BUILD_STANDALONE.md) for detailed instructions.
+
+Quick build:
+```bash
+pip install pyinstaller
+python build_standalone.py
+```
+
+The standalone executable will be created in the `dist/` folder and can be distributed to users who don't have Python installed.
+
 ## Examples
 
 The algorithm is robust. It performs well for images that are already approximately alligned to a grid.

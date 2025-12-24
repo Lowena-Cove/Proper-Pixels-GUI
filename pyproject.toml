@@ -38,6 +38,7 @@ web = ["gradio>=5.0.0"]
 [project.scripts]
 ppa = "proper_pixel_art.cli:main"
 ppa-web = "proper_pixel_art.web:main"
+ppa-gui = "proper_pixel_art.gui:main"
 
 [build-system]
 requires = ["hatchling"]
