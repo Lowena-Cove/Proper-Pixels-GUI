@@ -2,10 +2,15 @@
 
 import PyInstaller.__main__
 import sys
+import os
 from pathlib import Path
 
 # Get the project root directory
 project_root = Path(__file__).parent.absolute()
+
+# Determine the correct path separator for --add-data
+# Windows uses semicolon, Unix uses colon
+path_sep = ';' if sys.platform == 'win32' else ':'
 
 # PyInstaller arguments
 args = [
@@ -14,7 +19,7 @@ args = [
     "--onefile",  # Single executable file
     "--windowed",  # No console window (GUI app)
     "--icon=NONE",  # No icon for now
-    f"--add-data={project_root / 'proper_pixel_art'}:proper_pixel_art",  # Include package
+    f"--add-data={project_root / 'proper_pixel_art'}{path_sep}proper_pixel_art",  # Include package
     "--hidden-import=PIL._tkinter_finder",  # Ensure tkinter works
     "--collect-all=PIL",  # Include all PIL/Pillow
     "--collect-all=numpy",  # Include all numpy
