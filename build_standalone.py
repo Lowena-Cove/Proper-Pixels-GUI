@@ -2,7 +2,6 @@
 
 import PyInstaller.__main__
 import sys
-import os
 from pathlib import Path
 
 # Get the project root directory

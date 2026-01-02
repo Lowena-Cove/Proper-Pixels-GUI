@@ -31,7 +31,7 @@ jobs:
           path: dist/ProperPixelArt.exe
       
       - name: Upload to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: dist/ProperPixelArt.exe
         env:
@@ -68,7 +68,7 @@ jobs:
           path: dist/ProperPixelArt-macOS.zip
       
       - name: Upload to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: dist/ProperPixelArt-macOS.zip
         env:
@@ -88,6 +88,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-tk
+      
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       
       - name: Install dependencies
         run: |
@@ -110,7 +118,7 @@ jobs:
           path: dist/ProperPixelArt-Linux.tar.gz
       
       - name: Upload to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: dist/ProperPixelArt-Linux.tar.gz
         env:
