@@ -2,7 +2,22 @@
 
 This document describes how to build a standalone executable of the Proper Pixel Art GUI application.
 
-## Prerequisites
+## Downloading Pre-built Executables
+
+The easiest way to get a standalone executable is to download a pre-built version from the [Releases](https://github.com/Lowena-Cove/Proper-Pixels-GUI/releases) page.
+
+Each release includes pre-built executables for:
+- **Windows**: `ProperPixelArt.exe`
+- **macOS**: `ProperPixelArt-macOS.zip` (contains `ProperPixelArt.app`)
+- **Linux**: `ProperPixelArt-Linux.tar.gz` (contains `ProperPixelArt` binary)
+
+Simply download the file for your operating system and run it - no Python installation required!
+
+## Building Locally
+
+If you want to build the executable yourself, follow the instructions below.
+
+### Prerequisites
 
 ### Required Packages
 
@@ -156,3 +171,25 @@ Then edit `ProperPixelArt.spec` and build with:
 ```bash
 pyinstaller ProperPixelArt.spec
 ```
+
+## Automated Builds (GitHub Actions)
+
+This repository includes a GitHub Actions workflow that automatically builds standalone executables for all platforms when a new release is published.
+
+### How It Works
+
+1. When a new release is created on GitHub, the workflow automatically triggers
+2. Three parallel build jobs run on Windows, macOS, and Linux runners
+3. Each job builds a platform-specific executable using the `build_standalone.py` script
+4. The executables are automatically uploaded as release assets
+
+### Triggering a Build
+
+To trigger an automated build:
+
+1. Create a new tag: `git tag v1.0.0`
+2. Push the tag: `git push origin v1.0.0`
+3. Go to the GitHub repository and create a new release using that tag
+4. The workflow will automatically build and attach executables to the release
+
+The workflow file is located at `.github/workflows/build-release.yml` and can be customized if needed.

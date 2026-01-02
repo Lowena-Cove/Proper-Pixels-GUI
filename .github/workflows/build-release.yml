@@ -1,0 +1,131 @@
+name: Build and Release Standalone Executables
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -e .
+      
+      - name: Build Windows executable
+        run: python build_standalone.py
+      
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProperPixelArt-Windows
+          path: dist/ProperPixelArt.exe
+      
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/ProperPixelArt.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-macos:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -e .
+      
+      - name: Build macOS executable
+        run: python build_standalone.py
+      
+      - name: Create macOS archive
+        run: |
+          cd dist
+          zip -r ProperPixelArt-macOS.zip ProperPixelArt.app
+      
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProperPixelArt-macOS
+          path: dist/ProperPixelArt-macOS.zip
+      
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/ProperPixelArt-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-linux:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk
+      
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -e .
+      
+      - name: Build Linux executable
+        run: python build_standalone.py
+      
+      - name: Create Linux archive
+        run: |
+          cd dist
+          tar -czf ProperPixelArt-Linux.tar.gz ProperPixelArt
+      
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProperPixelArt-Linux
+          path: dist/ProperPixelArt-Linux.tar.gz
+      
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/ProperPixelArt-Linux.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
